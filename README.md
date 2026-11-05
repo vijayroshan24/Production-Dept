@@ -1,50 +1,43 @@
-# Production Tracker
+# Production Tracker Demo
 
-Starter production tracking app: React + Spring Boot + PostgreSQL.
+A small, single-site Django demo for walking a client through a production dashboard. Django serves the pages and handles the app logic. It uses SQLite, so there is no separate frontend server, Java runtime, Docker, or hosted database to configure.
 
-It includes sign-in, overview, projects, assembly lines, production log, team, reports, and settings pages. Project and production-update data are stored in PostgreSQL. Team, reports, and some dashboard figures are currently sample UI content.
+## What works
 
-## Start the app
+- Demo sign-in and sign-out
+- Overview with project counts, output chart, and status summary
+- Project search, status filters, create, edit, and delete
+- Production log with search and a form that updates project totals
+- Sample assembly line and team pages
+- CSV exports for projects and production updates
+- Fictional sample data created by the `seed_demo` command
 
-Open three PowerShell windows.
+Team and assembly line rows are presentation sample content. This project is for a client walkthrough, not for real production records.
 
-1. Start PostgreSQL:
+## Run locally on Windows
 
-   ```powershell
-   cd D:\Production-Tracking-System
-   .\start-database.ps1
-   ```
-
-2. Start the API:
-
-   ```powershell
-   cd D:\Production-Tracking-System
-   .\start-backend.ps1
-   ```
-
-3. Start the website:
-
-   ```powershell
-   cd D:\Production-Tracking-System\frontend
-   npm run dev
-   ```
-
-Open `http://localhost:5173` and sign in with:
-
-- Email: `admin@northstar.local`
-- Password: `ChangeMe123!`
-
-Stop PostgreSQL when finished:
+Install Python 3.10 or newer, then open PowerShell in this folder:
 
 ```powershell
-D:\Production-Tracking-System\stop-database.ps1
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_demo
+python manage.py runserver
 ```
 
-The sample password is for local development. Change it before anyone else uses the app.
-The local PostgreSQL database uses port `5433` so it does not conflict with another database already using the default port.
+Open <http://127.0.0.1:8000>.
 
-## Continuing on another computer
+### Demo login
 
-Install Node.js 20+, JDK 21, Maven, and PostgreSQL 17. The PowerShell helper scripts above assume the tools are in `D:\Tools` on the current development laptop. On another computer, set the database connection in `backend\src\main\resources\application.yml`, then run Spring Boot with Maven and the website with `npm run dev` from `frontend`.
+- Email: `demo@production.local`
+- Password: `Demo123!`
 
-The project contains starter data and a development password. Review authentication, access rules, and sample content before using it with a client or real production data.
+## Free demo deployment on Render
+
+The included `render.yaml` describes one free Python web service. Connect the public GitHub repository to Render and choose **Blueprint** (or create a Python web service using the commands in `render.yaml`). The whole site uses one Render URL. It uses no Docker image and no separate database service.
+
+Render's free service sleeps when idle, and its local filesystem is temporary. Because this demo stores data in a local SQLite file, edits may reset after a sleep, restart, or redeploy. The start command applies database migrations and restores the fictional sample data when needed.
+
+For a client walkthrough, open the site shortly before the meeting so the free service has time to wake up. Do not enter customer or private production information.

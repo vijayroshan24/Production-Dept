@@ -1,0 +1,2 @@
+{% extends 'tracker/base.html' %}
+{% block content %}<div class="form-panel confirm-panel"><div class="metric-icon danger-icon">!</div><h2>Remove this project?</h2><p><b>{{ project.name }}</b> and its production log entries will be removed from this demo workspace.</p><form method="post">{% csrf_token %}<div class="modal-actions"><a class="button secondary" href="{% url 'projects' %}">Cancel</a><button class="button danger-button" type="submit">Remove project</button></div></form></div>{% endblock %}
