@@ -38,4 +38,4 @@ class Command(BaseCommand):
         for project_index, quantity, shift, note, days_ago in entries:
             item = ProductionUpdate.objects.create(project=projects[project_index], quantity=quantity, shift=shift, note=note, recorded_by=user)
             ProductionUpdate.objects.filter(pk=item.pk).update(recorded_at=timezone.now() - timedelta(days=days_ago, hours=2))
-        self.stdout.write(self.style.SUCCESS("Demo user and fictional sample data are ready."))\n
+        self.stdout.write(self.style.SUCCESS("Demo user and fictional sample data are ready."))
