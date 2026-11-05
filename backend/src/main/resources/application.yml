@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet.session.cookie:
+    http-only: true
+    same-site: lax
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/forge_production}
+    username: ${DATABASE_USERNAME:forge_app}
+    password: ${DATABASE_PASSWORD:forge_local_dev}
+  jpa:
+    hibernate.ddl-auto: update
+    open-in-view: false
+    properties.hibernate.format_sql: true
+  jackson.time-zone: Asia/Kolkata
+app:
+  frontend-origin: ${FRONTEND_ORIGIN:http://localhost:5173}
+  admin-email: ${APP_ADMIN_EMAIL:admin@northstar.local}
+  admin-password: ${APP_ADMIN_PASSWORD:ChangeMe123!}
